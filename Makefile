@@ -51,4 +51,5 @@ run: $(DEPS) ## Run the program on the provided dataset
 
 patch: ## Generate a patch file to submit for your solution
 	git add .
+	# black .
 	git diff --binary origin/master > irt_interview_solution.patch

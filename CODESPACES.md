@@ -2,7 +2,7 @@
 
 In case you don't have a Linux or a Mac machine, you can use a Github Codespace to develop your solution for free. 
 
-1. [Create a copy of this repository](https://x/interview/generate)
+1. [Create a copy of this repository](https://github.com/aowc/interview/generate)
     1. Be sure to make it private, as you'll be pushing your solution to it
 3. [Create a Codespace](https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository) in your copy
     1. Check out the "Machine types" in the advanced options flow to ensure you're using the most powerful one available for free!
