@@ -7,8 +7,8 @@ import sys
 def process_csv(
     input_stream,
     station_column=None,
-    temp_column=None,
     timestamp_column=None,
+    temp_column=None,
 ):
     station_data = defaultdict(lambda: defaultdict(list))
     reader = csv.DictReader(input_stream)
