@@ -1,30 +1,38 @@
+import sys
 import csv
 from datetime import datetime
 from collections import defaultdict
-import sys
+from typing import List, Dict, Any, IO, Tuple
 
 
 def process_csv(
-    input_stream,
-    station_column=None,
-    timestamp_column=None,
-    temp_column=None,
-):
+    input_stream: IO[str],
+    station_column: str,
+    timestamp_column: str,
+    temp_column: str,
+) -> List[Dict[str, Any]]:
     station_data = defaultdict(lambda: defaultdict(list))
     reader = csv.DictReader(input_stream)
 
     for row in reader:
-        timestamp = datetime.strptime(row[timestamp_column], "%m/%d/%Y %H:%M:%S %p")
-        station = row[station_column]
         try:
+            timestamp = datetime.strptime(row[timestamp_column], "%m/%d/%Y %H:%M:%S %p")
+            station = row[station_column]
             temperature = float(row[temp_column])
-        except ValueError:
-            continue  # Skip invalid rows
+        except (ValueError, KeyError):
+            continue
 
-        day = timestamp.date()  # Get the date (day)
+        day = timestamp.date().strftime("%m/%d/%Y")
         station_data[station][day].append((timestamp, temperature))
 
+    return aggregate_daily_data(station_data)
+
+
+def aggregate_daily_data(
+    station_data: Dict[str, Dict[datetime, List[Tuple[datetime, float]]]]
+) -> List[Dict[str, Any]]:
     daily_aggregates = []
+
     for station, days in station_data.items():
         for day, entries in days.items():
             entries.sort()
@@ -48,7 +56,7 @@ def process_csv(
     return daily_aggregates
 
 
-def output_to_stdout(daily_aggregates):
+def output_to_stdout(daily_aggregates: List[Dict[str, Any]]) -> None:
     fieldnames = [
         "Station Name",
         "Date",
@@ -58,8 +66,8 @@ def output_to_stdout(daily_aggregates):
         "Last Temp",
     ]
     writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
-
     writer.writeheader()
+
     for aggregate in daily_aggregates:
         writer.writerow(
             {

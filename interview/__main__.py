@@ -1,10 +1,11 @@
 import sys
-from interview import weather
+from interview.weather import process_csv, output_to_stdout
 
-weather.daily_aggregates = weather.process_csv(
+aggregated_data = process_csv(
     sys.stdin,
     station_column="Station Name",
     timestamp_column="Measurement Timestamp",
     temp_column="Air Temperature",
 )
-weather.output_to_stdout(weather.daily_aggregates)
+
+output_to_stdout(aggregated_data)
