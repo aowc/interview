@@ -7,14 +7,14 @@ from datetime import datetime
 def sample_csv_data():
     return StringIO(
         """station,timestamp,temperature
-        Station1,06/01/2021 08:00:00 AM,70.5
-        Station1,06/01/2021 12:00:00 PM,75.1
-        Station1,06/01/2021 04:00:00 PM,80.0
-        Station1,06/02/2021 08:00:00 AM,72.3
-        Station2,06/01/2021 09:00:00 AM,65.2
-        Station2,06/01/2021 01:00:00 PM,68.9
-        Station2,06/02/2021 09:00:00 AM,66.5
-        """
+Station1,06/01/2021 08:00:00 AM,70.5
+Station1,06/01/2021 12:00:00 PM,75.1
+Station1,06/01/2021 04:00:00 PM,80.0
+Station1,06/02/2021 08:00:00 AM,72.3
+Station2,06/01/2021 09:00:00 AM,65.2
+Station2,06/01/2021 01:00:00 PM,68.9
+Station2,06/02/2021 09:00:00 AM,66.5
+"""
     )
 
 def test_process_csv(sample_csv_data):
@@ -25,7 +25,7 @@ def test_process_csv(sample_csv_data):
         temp_column="temperature",
     )
 
-    assert len(result) == 4  # Two days for two stations
+    assert len(result) == 4
     assert result[0]["station"] == "Station1"
     assert result[0]["min_temp"] == 70.5
     assert result[0]["max_temp"] == 80.0
