@@ -26,9 +26,18 @@ def test_process_csv(sample_csv_data):
     )
 
     assert len(result) == 4
+    # Station1 first day
     assert result[0]["station"] == "Station1"
     assert result[0]["min_temp"] == 70.5
     assert result[0]["max_temp"] == 80.0
+    assert result[0]["first_temp"] == 70.5
+    assert result[0]["last_temp"] == 80.0
+    # Station2 first day
+    assert result[2]["station"] == "Station2"
+    assert result[2]["min_temp"] == 65.2
+    assert result[2]["max_temp"] == 68.9
+    assert result[2]["first_temp"] == 65.2
+    assert result[2]["last_temp"] == 68.9
 
 def test_aggregate_daily_data():
     station_data = {
@@ -42,7 +51,7 @@ def test_aggregate_daily_data():
     result = aggregate_daily_data(station_data)
 
     assert len(result) == 1
+    assert result[0]["min_temp"] == 70.5
+    assert result[0]["max_temp"] == 75.1
     assert result[0]["first_temp"] == 70.5
     assert result[0]["last_temp"] == 75.1
-    assert result[0]["max_temp"] == 75.1
-    assert result[0]["min_temp"] == 70.5

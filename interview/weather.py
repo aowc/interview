@@ -23,7 +23,7 @@ def process_csv(
             continue
 
         try:
-            timestamp = datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S %p")
+            timestamp = datetime.strptime(timestamp_str, "%m/%d/%Y %I:%M:%S %p")
             temperature = float(temp_str)
         except (ValueError, KeyError):
             continue
@@ -41,7 +41,9 @@ def aggregate_daily_data(
 
     for station, days in station_data.items():
         for day, entries in days.items():
-            entries.sort()
+
+            # Sort entries explicitly by the timestamp
+            entries.sort(key=lambda x: x[0])
 
             first_temp = entries[0][1]
             last_temp = entries[-1][1]
