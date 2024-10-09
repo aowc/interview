@@ -15,10 +15,16 @@ def process_csv(
     reader = csv.DictReader(input_stream)
 
     for row in reader:
+        timestamp_str = row.get(timestamp_column)
+        station = row.get(station_column)
+        temp_str = row.get(temp_column)
+
+        if not timestamp_str or not station or not temp_str:
+            continue
+
         try:
-            timestamp = datetime.strptime(row[timestamp_column], "%m/%d/%Y %H:%M:%S %p")
-            station = row[station_column]
-            temperature = float(row[temp_column])
+            timestamp = datetime.strptime(timestamp_str, "%m/%d/%Y %H:%M:%S %p")
+            temperature = float(temp_str)
         except (ValueError, KeyError):
             continue
 
